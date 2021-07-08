@@ -3,7 +3,7 @@ module.exports = {
   images: {
     domains: [
       "links.papareact.com",
-      "platform-lookaside.fbsx.com",
+      "lh3.googleusercontent.com",
       "firebasestorage.googleapis.com",
     ],
   },

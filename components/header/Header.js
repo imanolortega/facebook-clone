@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { signOut } from "next-auth/client";
 import {
   FlagIcon,
   PlayIcon,
@@ -16,7 +17,7 @@ import {
 } from "@heroicons/react/solid";
 import HeaderIcon from "./HeaderIcon";
 
-const Header = () => {
+const Header = ({ user }) => {
   return (
     //left Header
     <div className="flex sticky top-0 z-50 bg-white items-center p-1 lg:px-5 shadow-md">
@@ -51,9 +52,19 @@ const Header = () => {
 
       {/*right Header*/}
       <div className="flex items-center sm:space-x-2 justify-end">
-        {/*Profile Image*/}
         <div className="flex items-center hover:bg-gray-100 p-1 rounded-full">
-          <p className="whitespace-nowrap font-semibold pr-3">Profile Name</p>
+          <Image
+            className="rounded-full cursor-pointer"
+            alt="profile"
+            src={user.image}
+            width="40"
+            height="40"
+            layout="fixed"
+            onClick={signOut}
+          />
+          <p className="whitespace-nowrap font-semibold pr-3 ml-3">
+            {user.name}
+          </p>
         </div>
         <ViewGridIcon className="icon" />
         <ChatIcon className="icon" />
