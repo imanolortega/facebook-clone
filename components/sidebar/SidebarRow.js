@@ -1,9 +1,9 @@
 import React from "react";
 import Image from "next/dist/client/image";
 
-const SidebarRow = ({ src, Icon, title }) => {
+const SidebarRow = ({ src, Icon, title, blue, gray }) => {
   return (
-    <div className="flex items-center space-x-2 p-4 hover:bg-gray-100 rounded-xl cursor-pointer">
+    <div className="flex items-center space-x-2 p-4 hover:bg-gray-200 rounded-xl cursor-pointer">
       {src && (
         <Image
           className="rounded-full"
@@ -14,7 +14,10 @@ const SidebarRow = ({ src, Icon, title }) => {
           layout="fixed"
         />
       )}
-      {Icon && <Icon className="h-8 w-8 text-blue-500" />}
+      {Icon && blue && <Icon className="h-8 w-8 text-blue-500" />}
+      {Icon && gray && (
+        <Icon className="h-8 w-8 text-gray-700 bg-gray-300 rounded-full p-2" />
+      )}
       <p className="hidden sm:inline-flex font-medium ">{title}</p>
     </div>
   );

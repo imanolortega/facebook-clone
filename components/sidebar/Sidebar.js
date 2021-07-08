@@ -16,15 +16,15 @@ import {
 const Sidebar = () => {
   const [session, loading] = useSession();
   return (
-    <aside className="p-2 mt-5 max-w-[400px] xl:min-w-[300px]">
+    <aside className="p-2 mt-5 max-w-[400px] xl:min-w-[300px] hidden md:block">
       <SidebarRow src={session.user.image} title={session.user.name} />
-      <SidebarRow Icon={UsersIcon} title={"Amigos"} />
-      <SidebarRow Icon={UserGroupIcon} title={"Grupos"} />
-      <SidebarRow Icon={ShoppingBagIcon} title={"Marketplace"} />
-      <SidebarRow Icon={DesktopComputerIcon} title={"Watch"} />
-      <SidebarRow Icon={CalendarIcon} title={"Eventos"} />
-      <SidebarRow Icon={ClockIcon} title={"Amigos"} />
-      <SidebarRow Icon={ChevronDownIcon} title={"Ver más"} />
+      <SidebarRow Icon={UsersIcon} title={"Amigos"} blue />
+      <SidebarRow Icon={UserGroupIcon} title={"Grupos"} blue />
+      <SidebarRow Icon={ShoppingBagIcon} title={"Marketplace"} blue />
+      <SidebarRow Icon={DesktopComputerIcon} title={"Watch"} blue />
+      <SidebarRow Icon={CalendarIcon} title={"Eventos"} blue />
+      <SidebarRow Icon={ClockIcon} title={"Amigos"} blue />
+      <SidebarRow Icon={ChevronDownIcon} title={"Ver más"} gray />
     </aside>
   );
 };
