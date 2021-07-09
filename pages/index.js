@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Header from "../components/header/Header";
 import Login from "../components/login/Login";
@@ -10,8 +10,13 @@ import { auth } from "../firebase";
 export default function Home() {
   const [user, setUser] = useState(null);
 
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem("user")));
+  }, []);
+
   const signOut = () => {
     auth.signOut().then(() => {
+      localStorage.removeItem("user");
       setUser(null);
     });
   };
