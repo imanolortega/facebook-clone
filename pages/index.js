@@ -5,6 +5,7 @@ import Header from "../components/header/Header";
 import Login from "../components/login/Login";
 import Sidebar from "../components/sidebar/Sidebar";
 import Feed from "./../components/feed/Feed";
+import { auth } from "../firebase";
 
 export default function Home() {
   const [user, setUser] = useState(null);
@@ -30,7 +31,7 @@ export default function Home() {
             <link rel="icon" href="/favicon.ico" />
           </Head>
 
-          <Header user={user} />
+          <Header user={user} signOut={signOut} />
 
           <main className="flex bg-gray-100">
             <Sidebar user={user} />

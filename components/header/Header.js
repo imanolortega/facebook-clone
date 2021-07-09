@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import { signOut } from "next-auth/client";
 import {
   FlagIcon,
   PlayIcon,
@@ -17,7 +16,7 @@ import {
 } from "@heroicons/react/solid";
 import HeaderIcon from "./HeaderIcon";
 
-const Header = ({ user }) => {
+const Header = ({ user, signOut }) => {
   console.log("Header:", user);
   return (
     //left Header

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/dist/client/image";
 import { PhotographIcon, VideoCameraIcon } from "@heroicons/react/solid";
 import { EmojiHappyIcon } from "@heroicons/react/outline";
@@ -6,6 +6,10 @@ import { db } from "../../firebase";
 import firebase from "firebase";
 
 const InputBox = ({ user }) => {
+  const inputRef = useRef(null);
+  const filePickerRef = useRef(null);
+  const [imageToPost, setImageToPost] = useState(null);
+
   const sendPost = (e) => {
     e.preventDefault();
     if (!inputRef.current.value) return; //does nothing;
@@ -19,7 +23,10 @@ const InputBox = ({ user }) => {
 
     inputRef.current.value = "";
   };
-  const inputRef = useRef(null);
+
+  const addImageToPost = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <div className=" bg-white mt-6 rounded-lg shadow font-medium ">
@@ -51,6 +58,12 @@ const InputBox = ({ user }) => {
         <div className="iconInput">
           <PhotographIcon className="w-8 h-8 text-green-500" />
           <p className="text-xs sm:text-sm xl:text-base">Foto/video</p>
+          <input
+            onChange={addImageToPost}
+            ref={filePickerRef}
+            type="file"
+            hidden
+          />
         </div>
         <div className=" items-center space-x-1 flex-grow justify-center p-2 hover:bg-gray-100 rounded-lg my-2 cursor-pointer hidden lg:flex">
           <EmojiHappyIcon className="w-8 h-8 text-yellow-300" />
