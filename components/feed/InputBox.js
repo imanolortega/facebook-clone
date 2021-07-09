@@ -1,21 +1,19 @@
 import React, { useRef } from "react";
 import Image from "next/dist/client/image";
-import { useSession } from "next-auth/client";
 import { PhotographIcon, VideoCameraIcon } from "@heroicons/react/solid";
 import { EmojiHappyIcon } from "@heroicons/react/outline";
 import { db } from "../../firebase";
 import firebase from "firebase";
 
-const InputBox = () => {
-  const [session] = useSession();
+const InputBox = ({ user }) => {
   const sendPost = (e) => {
     e.preventDefault();
     if (!inputRef.current.value) return; //does nothing;
     db.collection("post").add({
       message: inputRef.current.value,
-      name: session.user.name,
-      email: session.user.email,
-      image: session.user.image,
+      name: user.name,
+      email: user.email,
+      image: user.photo,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
 
@@ -29,7 +27,7 @@ const InputBox = () => {
         <Image
           className="rounded-full"
           alt="profile"
-          src={session.user.image}
+          src={user.photo}
           width="40"
           height="40"
           layout="fixed"
@@ -37,7 +35,7 @@ const InputBox = () => {
         <form className="flex flex-1">
           <input
             ref={inputRef}
-            placeholder={`¿Qué estás pensando, ${session.user.name}?`}
+            placeholder={`¿Qué estás pensando, ${user.name}?`}
             className="bg-gray-100 items-center outline-none placeholder-gray-500 px-5 rounded-full h-12 flex flex-grow"
           />
         </form>

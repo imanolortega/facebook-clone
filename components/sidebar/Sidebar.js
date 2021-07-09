@@ -3,7 +3,6 @@ import {
   ShoppingBagIcon,
   UsersIcon,
 } from "@heroicons/react/solid";
-import { useSession } from "next-auth/client";
 import React from "react";
 import SidebarRow from "./SidebarRow";
 import {
@@ -13,11 +12,10 @@ import {
   UserGroupIcon,
 } from "@heroicons/react/outline";
 
-const Sidebar = () => {
-  const [session, loading] = useSession();
+const Sidebar = ({ user }) => {
   return (
     <aside className="p-2 mt-5 max-w-[400px] xl:min-w-[300px] hidden md:block">
-      <SidebarRow src={session.user.image} title={session.user.name} />
+      <SidebarRow src={user.photo} title={user.name} />
       <SidebarRow Icon={UsersIcon} title={"Amigos"} blue />
       <SidebarRow Icon={UserGroupIcon} title={"Grupos"} blue />
       <SidebarRow Icon={ShoppingBagIcon} title={"Marketplace"} blue />

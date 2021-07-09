@@ -18,6 +18,7 @@ import {
 import HeaderIcon from "./HeaderIcon";
 
 const Header = ({ user }) => {
+  console.log("Header:", user);
   return (
     //left Header
     <div className="flex sticky top-0 z-50 bg-white items-center p-1 lg:px-5 shadow-md">
@@ -56,7 +57,7 @@ const Header = ({ user }) => {
           <Image
             className="rounded-full cursor-pointer"
             alt="profile"
-            src={user.image}
+            src={user.photo}
             width="40"
             height="40"
             layout="fixed"

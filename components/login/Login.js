@@ -1,8 +1,27 @@
 import React from "react";
 import Image from "next/image";
-import { signIn } from "next-auth/client";
+import { auth, provider } from "../../firebase";
 
-const Login = () => {
+const Login = ({ setUser }) => {
+  const signIn = () => {
+    auth
+      .signInWithPopup(provider)
+      .then((result) => {
+        let user = result.user;
+        let newUser = {
+          name: user.displayName,
+          email: user.email,
+          photo: user.photoURL,
+        };
+        localStorage.setItem("user", JSON.stringify(newUser));
+        setUser(newUser);
+        console.log(user);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
   return (
     <div className="grid place-items-center">
       <Image
