@@ -37,10 +37,10 @@ export default function Home() {
             <link rel="icon" href="/favicon.ico" />
           </Head>
 
-          <Header user={user} signOut={signOut} />
+          <Header user={user} />
 
           <main className="flex bg-gray-100">
-            <Sidebar user={user} />
+            <Sidebar user={user} signOut={signOut} />
             <Feed user={user} />
             <Contacts />
           </main>

@@ -16,10 +16,10 @@ import {
 } from "@heroicons/react/solid";
 import HeaderIcon from "./HeaderIcon";
 
-const Header = ({ user, signOut }) => {
+const Header = ({ user }) => {
   return (
     //left Header
-    <div className="flex sticky top-0 z-50 bg-white items-center p-1 lg:px-5 shadow-md">
+    <div className="flex sticky top-0 z-51 bg-white items-center p-1 lg:px-5 shadow-md">
       <div className="flex items-center">
         <Image
           alt="logo"
@@ -51,15 +51,14 @@ const Header = ({ user, signOut }) => {
 
       {/*right Header*/}
       <div className="flex items-center sm:space-x-2 justify-end">
-        <div className="flex items-center hover:bg-gray-100 p-1 rounded-full">
+        <div className="flex items-center hover:bg-gray-100 p-1 rounded-full cursor-pointer">
           <Image
-            className="rounded-full cursor-pointer"
+            className="rounded-full "
             alt="profile"
             src={user.photo}
             width="40"
             height="40"
             layout="fixed"
-            onClick={signOut}
           />
           <p className="whitespace-nowrap font-semibold pr-3 ml-3">
             {user.name}

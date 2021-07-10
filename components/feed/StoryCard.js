@@ -11,6 +11,7 @@ const StoryCard = ({ name, src, profile }) => {
         width={40}
         height={40}
       />
+
       <Image
         className="object-cover filter brighness-75 rounded-full lg:rounded-xl contrast-75"
         alt="story"

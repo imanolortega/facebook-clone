@@ -9,10 +9,12 @@ import {
   CalendarIcon,
   ChevronDownIcon,
   ClockIcon,
+  LogoutIcon,
   UserGroupIcon,
 } from "@heroicons/react/outline";
+import SignOut from "./SignOut";
 
-const Sidebar = ({ user }) => {
+const Sidebar = ({ user, signOut }) => {
   return (
     <aside className="p-2 mt-5 max-w-[400px] xl:min-w-[300px] hidden md:block">
       <SidebarRow src={user.photo} title={user.name} />
@@ -23,6 +25,7 @@ const Sidebar = ({ user }) => {
       <SidebarRow Icon={CalendarIcon} title={"Eventos"} blue />
       <SidebarRow Icon={ClockIcon} title={"Amigos"} blue />
       <SidebarRow Icon={ChevronDownIcon} title={"Ver más"} gray />
+      <SignOut Icon={LogoutIcon} title={"Cerrar Sesión"} signOut={signOut} />
     </aside>
   );
 };
