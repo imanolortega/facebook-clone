@@ -1,15 +1,15 @@
 import React from "react";
 import InputBox from "./InputBox";
 import Stories from "./Stories";
-import Post from "./Post";
+import Posts from "./Posts";
 
 const Feed = ({ user }) => {
   return (
-    <div className="flex-grow h-screen pb-44 pt-6 xl:mr-32 overflow-y-auto">
+    <div className="flex-grow h-screen pb-44 pt-6 xl:mr-32 overflow-y-auto no-scrollbar">
       <div className="mx-auto max-w-md md:max-w-lg lg:max-w-3xl">
         <Stories />
         <InputBox user={user} />
-        <Post />
+        <Posts />
       </div>
     </div>
   );

@@ -17,7 +17,6 @@ import {
 import HeaderIcon from "./HeaderIcon";
 
 const Header = ({ user, signOut }) => {
-  console.log("Header:", user);
   return (
     //left Header
     <div className="flex sticky top-0 z-50 bg-white items-center p-1 lg:px-5 shadow-md">

@@ -13,7 +13,7 @@ const InputBox = ({ user }) => {
   const sendPost = (e) => {
     e.preventDefault();
     if (!inputRef.current.value) return; //does nothing;
-    db.collection("post")
+    db.collection("posts")
       .add({
         message: inputRef.current.value,
         name: user.name,
@@ -39,7 +39,7 @@ const InputBox = ({ user }) => {
                 .child(doc.id)
                 .getDownloadURL()
                 .then((url) => {
-                  db.collection("post").doc(doc.id).set(
+                  db.collection("posts").doc(doc.id).set(
                     {
                       postImg: url,
                     },
@@ -105,13 +105,17 @@ const InputBox = ({ user }) => {
       <div className="flex items-center justify-center border-t-2 mx-4">
         <div className="iconInput">
           <VideoCameraIcon className="w-8 h-8 text-red-500" />
-          <p className="text-xs sm:text-sm xl:text-base">Video en vivo</p>
+          <p className="text-xs sm:text-sm xl:text-base text-gray-600">
+            Video en vivo
+          </p>
         </div>
         <div
           onClick={() => filePickerRef.current.click()}
           className="iconInput">
           <PhotographIcon className="w-8 h-8 text-green-500" />
-          <p className="text-xs sm:text-sm xl:text-base">Foto/video</p>
+          <p className="text-xs sm:text-sm xl:text-base text-gray-600">
+            Foto/video
+          </p>
           <input
             onChange={addImageToPost}
             ref={filePickerRef}
@@ -121,7 +125,7 @@ const InputBox = ({ user }) => {
         </div>
         <div className=" items-center space-x-1 flex-grow justify-center p-2 hover:bg-gray-100 rounded-lg my-2 cursor-pointer hidden lg:flex">
           <EmojiHappyIcon className="w-8 h-8 text-yellow-300" />
-          <p className="text-xs sm:text-sm xl:text-base">
+          <p className="text-xs sm:text-sm xl:text-base text-gray-600">
             Sentimiendo/actividad
           </p>
         </div>
