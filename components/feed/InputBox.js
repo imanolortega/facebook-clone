@@ -12,7 +12,7 @@ const InputBox = ({ user }) => {
 
   const sendPost = (e) => {
     e.preventDefault();
-    if (!inputRef.current.value) return; //does nothing;
+    if (!inputRef.current.value && !imageToPost) return; //does nothing;
     db.collection("posts")
       .add({
         message: inputRef.current.value,
