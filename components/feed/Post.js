@@ -1,9 +1,8 @@
 import React from "react";
 import Image from "next/image";
 import { ChatAlt2Icon, ThumbUpIcon, ShareIcon } from "@heroicons/react/outline";
-Image;
 
-const Post = ({ name, email, message, postImg, image, timestamp }) => {
+const Post = ({ name, email, message, postImg, image, timestamp, user }) => {
   return (
     <div className=" bg-white mt-6 rounded-lg shadow font-medium ">
       <div className="flex space-x-4 p-4 items-center flex-1 focus:outline-none">
@@ -62,7 +61,7 @@ const Post = ({ name, email, message, postImg, image, timestamp }) => {
         <Image
           className="rounded-full"
           alt="profile"
-          src={image}
+          src={user.photo}
           width="40"
           height="40"
           layout="fixed"

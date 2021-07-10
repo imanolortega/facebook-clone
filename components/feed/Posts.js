@@ -3,7 +3,7 @@ import React from "react";
 import { db } from "../../firebase";
 import Post from "./Post";
 
-const Posts = () => {
+const Posts = ({ user }) => {
   const [realtimePosts, loading, error] = useCollection(
     db.collection("posts").orderBy("timestamp", "desc")
   );
@@ -12,6 +12,7 @@ const Posts = () => {
     <div>
       {realtimePosts?.docs.map((post) => (
         <Post
+          user={user}
           key={post.id}
           name={post.data().name}
           email={post.data().email}
