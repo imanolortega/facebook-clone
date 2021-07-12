@@ -12,6 +12,7 @@ const Posts = ({ user }) => {
     <div>
       {realtimePosts?.docs.map((post) => (
         <Post
+          id={post.id}
           user={user}
           key={post.id}
           name={post.data().name}

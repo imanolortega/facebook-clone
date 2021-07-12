@@ -1,24 +1,52 @@
 import React from "react";
 import Image from "next/image";
-import { ChatAlt2Icon, ThumbUpIcon, ShareIcon } from "@heroicons/react/outline";
+import { db } from "../../firebase";
+import {
+  ChatAlt2Icon,
+  ThumbUpIcon,
+  ShareIcon,
+  TrashIcon,
+} from "@heroicons/react/outline";
 
-const Post = ({ name, email, message, postImg, image, timestamp, user }) => {
+const Post = ({
+  name,
+  id,
+  message,
+  postImg,
+  image,
+  timestamp,
+  user,
+  email,
+}) => {
   return (
     <div className=" bg-white mt-6 rounded-lg shadow font-medium ">
-      <div className="flex space-x-4 p-4 items-center flex-1 focus:outline-none">
-        <Image
-          className="rounded-full"
-          alt="profile"
-          src={image}
-          width="40"
-          height="40"
-          layout="fixed"
-        />
+      <div className="flex space-x-4 p-4 pb-0 items-center justify-between focus:outline-none">
+        <div className="flex space-x-4 items-center">
+          <Image
+            className="rounded-full"
+            alt="profile"
+            src={image}
+            width="40"
+            height="40"
+            layout="fixed"
+          />
+          <div>
+            <p className="font-semibold">{name}</p>
+            <span className="text-xs text-gray-500 p-0">
+              {new Date(timestamp?.toDate()).toLocaleString()}
+            </span>
+          </div>
+        </div>
         <div>
-          <p className="font-semibold">{name}</p>
-          <span className="text-xs text-gray-500 p-0">
-            {new Date(timestamp?.toDate()).toLocaleString()}
-          </span>
+          {user.email == email ? (
+            <TrashIcon
+              className="w-5 h-5 text-gray-500 cursor-pointer hover:text-red-400"
+              onClick={(e) =>
+                db.collection("posts").doc(id).delete()
+              }></TrashIcon>
+          ) : (
+            ""
+          )}
         </div>
       </div>
 
