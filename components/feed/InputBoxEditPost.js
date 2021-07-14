@@ -1,5 +1,10 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { PencilAltIcon, XCircleIcon, XIcon } from "@heroicons/react/outline";
+import {
+  PencilAltIcon,
+  PencilIcon,
+  XCircleIcon,
+  XIcon,
+} from "@heroicons/react/outline";
 import { Fragment, useState, useRef } from "react";
 import { db } from "../../firebase";
 import Image from "next/image";
@@ -24,9 +29,9 @@ export default function InputBoxEditPosts({ message, id, name, profile }) {
 
   return (
     <>
-      <div>
-        <PencilAltIcon
-          className="w-6 h-6 text-gray-500 cursor-pointer hover:text-blue-400"
+      <div className="flex items-center">
+        <PencilIcon
+          className="w-5 h-5 text-gray-500 cursor-pointer hover:text-blue-400"
           type="button"
           onClick={() => setIsOpen(true)}
         />
