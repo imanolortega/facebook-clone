@@ -1,24 +1,17 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { PencilAltIcon } from "@heroicons/react/outline";
+import { PencilAltIcon, XCircleIcon, XIcon } from "@heroicons/react/outline";
 import { Fragment, useState, useRef } from "react";
 import { db } from "../../firebase";
 import Image from "next/image";
 
 export default function InputBoxEditPosts({ message, id, name, profile }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [input, setInput] = useState(message);
   const inputRef = useRef(null);
-
-  function closeModal() {
-    setIsOpen(false);
-  }
-
-  function openModal() {
-    setIsOpen(true);
-  }
 
   const editPost = (e) => {
     e.preventDefault();
-    if (!inputRef.current.value) return; //does nothing;
+    if (!inputRef.current.value) return;
     db.collection("posts").doc(id).set(
       {
         message: inputRef.current.value,
@@ -35,7 +28,7 @@ export default function InputBoxEditPosts({ message, id, name, profile }) {
         <PencilAltIcon
           className="w-6 h-6 text-gray-500 cursor-pointer hover:text-blue-400"
           type="button"
-          onClick={openModal}
+          onClick={() => setIsOpen(true)}
         />
       </div>
 
@@ -44,7 +37,7 @@ export default function InputBoxEditPosts({ message, id, name, profile }) {
           <Dialog
             as="div"
             className="fixed inset-0 z-10 overflow-y-auto"
-            onClose={closeModal}>
+            onClose={() => setIsOpen(false)}>
             <div className="min-h-screen px-4 text-center">
               <Transition.Child
                 as={Fragment}
@@ -71,12 +64,19 @@ export default function InputBoxEditPosts({ message, id, name, profile }) {
                 leave="ease-in duration-200"
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95">
-                <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
-                  <Dialog.Title
-                    as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900 border-b-2 pb-2 text-center">
-                    Editar publicación
-                  </Dialog.Title>
+                <div className="inline-block w-full max-w-md p-6 pt-0 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                  <div className="flex border-b-2 justify-between items-center py-4 pt-5">
+                    <Dialog.Title
+                      as="h3"
+                      className="text-lg font-medium leading-6 text-gray-900">
+                      Editar publicación
+                    </Dialog.Title>
+                    <XIcon
+                      onClick={() => setIsOpen(false)}
+                      className="h-7 w-7 bg-gray-300 hover:bg-gray-200 rounded-full p-1 cursor-pointer"
+                    />
+                  </div>
+
                   <div className="flex space-x-4 items-center mt-2">
                     <Image
                       className="rounded-full"
@@ -95,23 +95,18 @@ export default function InputBoxEditPosts({ message, id, name, profile }) {
                       <textarea
                         type=""
                         ref={inputRef}
-                        value={message}
-                        className="bg-gray-100 items-center outline-none placeholder-gray-500 px-4 p-3 rounded-lg h-20 flex flex-grow mt-4"></textarea>
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                        className="bg-gray-100 items-center outline-none px-4 p-3 rounded-lg h-20 flex flex-grow mt-4"></textarea>
                     </form>
                   </div>
 
-                  <div className="mt-4">
+                  <div className="flex mt-4">
                     <button
                       type="button"
-                      className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                      className="flex-grow justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
                       onClick={editPost}>
-                      Editar
-                    </button>
-                    <button
-                      type="button"
-                      className="ml-4 inline-flex justify-center px-4 py-2 text-sm font-medium text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500"
-                      onClick={closeModal}>
-                      Cerrar
+                      Guardar
                     </button>
                   </div>
                 </div>
