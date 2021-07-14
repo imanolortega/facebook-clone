@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import Image from "next/dist/client/image";
 import { PhotographIcon, VideoCameraIcon } from "@heroicons/react/solid";
-import { EmojiHappyIcon } from "@heroicons/react/outline";
+import { EmojiHappyIcon, XIcon } from "@heroicons/react/outline";
 import { db, storage } from "../../firebase";
 import firebase from "firebase";
 
@@ -71,7 +71,7 @@ const InputBox = ({ user }) => {
 
   return (
     <div className=" bg-white mt-6 rounded-lg shadow font-medium ">
-      <div className="flex space-x-4 p-4 items-center flex-1 focus:outline-none">
+      <div className="flex justify-between p-4 items-center flex-1 focus:outline-none">
         <Image
           className="rounded-full"
           alt="profile"
@@ -84,14 +84,19 @@ const InputBox = ({ user }) => {
           <input
             ref={inputRef}
             placeholder={`¿Qué estás pensando, ${user.name}?`}
-            className="bg-gray-100 items-center outline-none placeholder-gray-500 px-5 rounded-full h-12 flex flex-grow"
+            className="bg-gray-100 items-center outline-none placeholder-gray-500 px-5 ml-4 rounded-full h-12 flex flex-grow"
           />
         </form>
-        <button className="font-medium	" type="submit" onClick={sendPost}>
+        <button
+          className="font-medium ml-4 hover:bg-blue-100 rounded-lg p-2 px-3"
+          type="submit"
+          onClick={sendPost}>
           Enviar
         </button>
         {imageToPost && (
-          <div onClick={removeImage} className="cursor-pointer">
+          <div
+            onClick={removeImage}
+            className="flex items-center cursor-pointer relative ml-4">
             <Image
               width={50}
               height={40}
@@ -99,6 +104,9 @@ const InputBox = ({ user }) => {
               alt="image-to-post"
               src={imageToPost}
             />
+            <div className="h-5 w-5 relative right-9 opacity-0 hover:opacity-100">
+              <XIcon />
+            </div>
           </div>
         )}
       </div>
