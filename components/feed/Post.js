@@ -7,6 +7,7 @@ import {
   ShareIcon,
   TrashIcon,
 } from "@heroicons/react/outline";
+import InputBoxEditPost from "./InputBoxEditPost";
 
 const Post = ({
   name,
@@ -37,13 +38,22 @@ const Post = ({
             </span>
           </div>
         </div>
-        <div>
+        <div className="w-13">
           {user.email == email ? (
-            <TrashIcon
-              className="w-5 h-5 text-gray-500 cursor-pointer hover:text-red-400"
-              onClick={(e) =>
-                db.collection("posts").doc(id).delete()
-              }></TrashIcon>
+            <div className="flex space-x-2 items-center">
+              <InputBoxEditPost
+                user={user}
+                message={message}
+                id={id}
+                name={name}
+                profile={image}
+              />
+              <TrashIcon
+                className="w-6 h-6 text-gray-500 cursor-pointer hover:text-red-400"
+                onClick={(e) =>
+                  db.collection("posts").doc(id).delete()
+                }></TrashIcon>
+            </div>
           ) : (
             ""
           )}
@@ -51,7 +61,7 @@ const Post = ({
       </div>
 
       <div className="flex p-4 pt-0 items-center flex-1 focus:outline-none">
-        <p className="font-normal">{message}</p>
+        <p className="font-normal mt-3">{message}</p>
       </div>
 
       {postImg && (
