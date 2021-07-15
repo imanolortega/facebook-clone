@@ -1,25 +1,91 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { PencilIcon, XIcon } from "@heroicons/react/outline";
+import { PencilIcon, PhotographIcon, XIcon } from "@heroicons/react/outline";
 import { Fragment, useState, useRef } from "react";
-import { db } from "../../firebase";
+import { db, storage } from "../../firebase";
 import Image from "next/image";
 
-export default function InputBoxEditPosts({ message, id, name, profile }) {
+export default function InputBoxEditPosts({
+  message,
+  id,
+  name,
+  profile,
+  postImg,
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState(message);
+  const [imgDelete, setImgDelete] = useState(false);
+  const [imageToPost, setImageToPost] = useState(null);
   const inputRef = useRef(null);
+  const filePickerRef = useRef(null);
 
-  const editPost = (e) => {
-    e.preventDefault();
-    if (!inputRef.current.value) return;
+  const editPost = () => {
+    db.collection("posts")
+      .doc(id)
+      .set(
+        {
+          message: inputRef.current.value,
+        },
+        { merge: true }
+      )
+      .then((doc) => {
+        if (imageToPost) {
+          const uploadTask = storage()
+            .ref(`posts/${id}`)
+            .putString(imageToPost, "data_url");
+
+          removeImage();
+
+          uploadTask.on(
+            "state_change",
+            null,
+            (error) => console.log(error),
+            () => {
+              storage()
+                .ref("posts")
+                .child(id)
+                .getDownloadURL()
+                .then((url) => {
+                  db.collection("posts").doc(id).set(
+                    {
+                      postImg: url,
+                    },
+                    { merge: true }
+                  );
+                });
+            }
+          );
+        }
+      });
+    if (!inputRef.current.value && !postImg) {
+      db.collection("posts").doc(id).delete();
+    }
+    setImgDelete(false);
+    setIsOpen(false);
+  };
+
+  const deleteImage = () => {
     db.collection("posts").doc(id).set(
       {
-        message: inputRef.current.value,
+        postImg: null,
       },
       { merge: true }
     );
-    inputRef.current.value = "";
-    setIsOpen(false);
+    setImgDelete(true);
+  };
+
+  const addImageToPost = (e) => {
+    const reader = new FileReader();
+    if (e.target.files[0]) {
+      reader.readAsDataURL(e.target.files[0]);
+    }
+
+    reader.onload = (readerEvent) => {
+      setImageToPost(readerEvent.target.result);
+    };
+  };
+
+  const removeImage = () => {
+    setImageToPost(null);
   };
 
   return (
@@ -64,7 +130,7 @@ export default function InputBoxEditPosts({ message, id, name, profile }) {
                 leave="ease-in duration-200"
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95">
-                <div className="inline-block w-full max-w-md p-6 pt-0 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                <div className="inline-block w-full max-w-xl p-6 pt-0 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
                   <div className="flex border-b-2 justify-between items-center py-4 pt-5">
                     <Dialog.Title
                       as="h3"
@@ -73,7 +139,7 @@ export default function InputBoxEditPosts({ message, id, name, profile }) {
                     </Dialog.Title>
                     <XIcon
                       onClick={() => setIsOpen(false)}
-                      className="h-7 w-7 bg-gray-300 hover:bg-gray-200 rounded-full p-1 cursor-pointer"
+                      className="h-7 w-7 bg-gray-200 hover:bg-gray-300 rounded-full p-1 cursor-pointer"
                     />
                   </div>
 
@@ -97,12 +163,62 @@ export default function InputBoxEditPosts({ message, id, name, profile }) {
                         ref={inputRef}
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
-                        className="bg-gray-100 items-center outline-none px-4 p-3 rounded-lg h-20 flex flex-grow mt-4"></textarea>
+                        className="bg-white items-center outline-none rounded-lg h-20 flex flex-grow mt-4"></textarea>
                     </form>
                   </div>
 
+                  {postImg && (
+                    <div className="relative h-56 md:h-96 bg-white">
+                      <XIcon
+                        onClick={() => deleteImage()}
+                        className="h-6 w-6 bg-gray-100 hover:bg-gray-200 rounded-full p-1 cursor-pointer z-10 absolute top-2 right-2"
+                      />
+                      <Image
+                        className="rounded-2xl"
+                        alt="post-image"
+                        src={postImg}
+                        objectFit="cover"
+                        layout="fill"
+                      />
+                    </div>
+                  )}
+
+                  {imageToPost && (
+                    <div className="relative h-56 md:h-96 bg-white">
+                      <XIcon
+                        onClick={removeImage}
+                        className="h-6 w-6 bg-gray-100 hover:bg-gray-200 rounded-full p-1 cursor-pointer z-10 absolute top-2 right-2"
+                      />
+                      <Image
+                        className="rounded-2xl"
+                        alt="post-image"
+                        src={imageToPost}
+                        objectFit="cover"
+                        layout="fill"
+                      />
+                    </div>
+                  )}
+
+                  {!postImg && (
+                    <div className="flex p-4 font-semibold items-center justify-between border-2 border-gray-300 rounded-xl">
+                      <p className="">Agregar a tu publicación</p>
+                      <div
+                        onClick={() => {
+                          filePickerRef.current.click();
+                        }}
+                        className="flex justify-end">
+                        <PhotographIcon className="h-9 w-9 text-green-500 rounded-full hover:bg-gray-200 hover:cursor-pointer p-1" />
+                        <input
+                          onChange={addImageToPost}
+                          ref={filePickerRef}
+                          type="file"
+                          hidden></input>
+                      </div>
+                    </div>
+                  )}
+
                   <div className="flex mt-4">
-                    {input === message ? (
+                    {input === message && !imgDelete && !imageToPost ? (
                       <button
                         disabled
                         className="disabled:opacity-50 flex-grow justify-center px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-transparent rounded-md">

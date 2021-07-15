@@ -16,7 +16,7 @@ const Post = ({
   email,
 }) => {
   return (
-    <div className=" bg-white mt-6 rounded-lg shadow font-medium ">
+    <div className=" bg-white mt-6 rounded-lg shadow font-medium w-full max-w-3xl">
       <div className="flex space-x-4 p-4 pb-0 items-center justify-between focus:outline-none">
         <div className="flex space-x-4 items-center">
           <Image
@@ -43,6 +43,7 @@ const Post = ({
                 id={id}
                 name={name}
                 profile={image}
+                postImg={postImg}
               />
               <DeletePosts
                 user={user}
