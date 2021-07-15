@@ -1,13 +1,9 @@
 import React from "react";
 import Image from "next/image";
-import { db } from "../../firebase";
-import {
-  ChatAlt2Icon,
-  ThumbUpIcon,
-  ShareIcon,
-  TrashIcon,
-} from "@heroicons/react/outline";
+
+import { ChatAlt2Icon, ThumbUpIcon, ShareIcon } from "@heroicons/react/outline";
 import InputBoxEditPost from "./InputBoxEditPost";
+import DeletePosts from "./DeletePost";
 
 const Post = ({
   name,
@@ -48,13 +44,14 @@ const Post = ({
                 name={name}
                 profile={image}
               />
-              <div className="flex items-center">
-                <TrashIcon
-                  className="w-5 h-5 text-gray-500 cursor-pointer hover:text-red-400"
-                  onClick={() =>
-                    db.collection("posts").doc(id).delete()
-                  }></TrashIcon>
-              </div>
+              <DeletePosts
+                user={user}
+                message={message}
+                id={id}
+                name={name}
+                profile={image}
+                postImg={postImg}
+              />
             </div>
           ) : (
             ""

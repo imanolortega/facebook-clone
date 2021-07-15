@@ -1,35 +1,19 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { PencilIcon, XIcon } from "@heroicons/react/outline";
-import { Fragment, useState, useRef } from "react";
+import { TrashIcon, XIcon } from "@heroicons/react/outline";
+import { Fragment, useState } from "react";
 import { db } from "../../firebase";
 import Image from "next/image";
 
-export default function InputBoxEditPosts({ message, id, name, profile }) {
+export default function DeletePosts({ message, id, name, profile, postImg }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [input, setInput] = useState(message);
-  const inputRef = useRef(null);
-
-  const editPost = (e) => {
-    e.preventDefault();
-    if (!inputRef.current.value) return;
-    db.collection("posts").doc(id).set(
-      {
-        message: inputRef.current.value,
-      },
-      { merge: true }
-    );
-    inputRef.current.value = "";
-    setIsOpen(false);
-  };
 
   return (
     <>
       <div className="flex items-center">
-        <PencilIcon
-          className="w-5 h-5 text-gray-500 cursor-pointer hover:text-blue-400"
+        <TrashIcon
+          className="w-5 h-5 text-gray-500 cursor-pointer hover:text-red-400"
           type="button"
-          onClick={() => setIsOpen(true)}
-        />
+          onClick={() => setIsOpen(true)}></TrashIcon>
       </div>
 
       {isOpen && (
@@ -69,7 +53,7 @@ export default function InputBoxEditPosts({ message, id, name, profile }) {
                     <Dialog.Title
                       as="h3"
                       className="text-lg font-medium leading-6 text-gray-900">
-                      Editar publicación
+                      Borrar Publicación
                     </Dialog.Title>
                     <XIcon
                       onClick={() => setIsOpen(false)}
@@ -91,31 +75,29 @@ export default function InputBoxEditPosts({ message, id, name, profile }) {
                     </div>
                   </div>
                   <div className="mt-2">
-                    <form className="flex flex-1">
-                      <textarea
-                        type=""
-                        ref={inputRef}
-                        value={input}
-                        onChange={(e) => setInput(e.target.value)}
-                        className="bg-gray-100 items-center outline-none px-4 p-3 rounded-lg h-20 flex flex-grow mt-4"></textarea>
-                    </form>
+                    <div className="flex p-4 pt-0 pl-0 items-center flex-1 focus:outline-none">
+                      <p className="font-normal mt-3">{message}</p>
+                    </div>
                   </div>
 
+                  {postImg && (
+                    <div className="relative h-56 md:h-96 bg-white">
+                      <Image
+                        alt="post-image"
+                        src={postImg}
+                        objectFit="cover"
+                        layout="fill"
+                      />
+                    </div>
+                  )}
+
                   <div className="flex mt-4">
-                    {input === message ? (
-                      <button
-                        disabled
-                        className="disabled:opacity-50 flex-grow justify-center px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-transparent rounded-md">
-                        Guardar
-                      </button>
-                    ) : (
-                      <button
-                        type="button"
-                        className="flex-grow justify-center px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-transparent rounded-md"
-                        onClick={editPost}>
-                        Guardar
-                      </button>
-                    )}
+                    <button
+                      type="button"
+                      className="flex-grow justify-center px-4 py-2 text-sm font-medium text-white bg-red-400  hover:bg-red-500 outline-none border border-transparent rounded-md"
+                      onClick={() => db.collection("posts").doc(id).delete()}>
+                      Borrar
+                    </button>
                   </div>
                 </div>
               </Transition.Child>
