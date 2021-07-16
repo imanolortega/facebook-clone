@@ -19,7 +19,7 @@ import HeaderIcon from "./HeaderIcon";
 const Header = ({ user }) => {
   return (
     //left Header
-    <div className="flex sticky top-0 z-52 bg-white items-center p-1 lg:px-5 shadow-md">
+    <div className="flex sticky top-0 z-50 bg-white items-center p-1 lg:px-5 shadow-md">
       <div className="flex items-center">
         <Image
           alt="logo"
