@@ -1,9 +1,7 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import Image from "next/dist/client/image";
-import { PhotographIcon, VideoCameraIcon } from "@heroicons/react/solid";
-import { EmojiHappyIcon, XIcon } from "@heroicons/react/outline";
-import { db, storage } from "../../firebase";
-import firebase from "firebase";
+import { VideoCameraIcon } from "@heroicons/react/solid";
+import { EmojiHappyIcon } from "@heroicons/react/outline";
 import SendPost from "./SendPost";
 
 const InputBox = ({ user }) => {
