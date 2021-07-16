@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 
 import { ChatAlt2Icon, ThumbUpIcon, ShareIcon } from "@heroicons/react/outline";
-import InputBoxEditPost from "./InputBoxEditPost";
+import EditPost from "./EditPost";
 import DeletePosts from "./DeletePost";
 
 const Post = ({
@@ -37,7 +37,7 @@ const Post = ({
         <div className="w-13">
           {user.email == email ? (
             <div className="flex space-x-2 items-center">
-              <InputBoxEditPost
+              <EditPost
                 user={user}
                 message={message}
                 id={id}

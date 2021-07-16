@@ -27,7 +27,7 @@ export default function InputBoxEditPosts({
         },
         { merge: true }
       )
-      .then((doc) => {
+      .then(() => {
         if (imageToPost) {
           const uploadTask = storage()
             .ref(`posts/${id}`)
@@ -221,7 +221,7 @@ export default function InputBoxEditPosts({
                     {input === message && !imgDelete && !imageToPost ? (
                       <button
                         disabled
-                        className="disabled:opacity-50 flex-grow justify-center px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-transparent rounded-md">
+                        className="cursor-not-allowed	disabled:opacity-50 flex-grow justify-center px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-transparent rounded-md">
                         Guardar
                       </button>
                     ) : (
