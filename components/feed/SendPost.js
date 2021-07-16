@@ -133,20 +133,22 @@ export default function SendPost({ user, photoClick, inputClick }) {
                 leave="ease-in duration-200"
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95">
-                <div className="inline-block w-full max-w-xl p-6 pt-0 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
-                  <div className="flex border-b-2 justify-between items-center py-4 pt-5">
+                <div className="inline-block w-full max-w-xl pt-0 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                  <div className="flex border-b-2 justify-center items-center py-4 pt-5">
                     <Dialog.Title
                       as="h3"
-                      className="text-lg font-medium leading-6 text-gray-900">
+                      className="text-xl font-bold leading-6 text-gray-900">
                       Crear Publicación
                     </Dialog.Title>
-                    <XIcon
-                      onClick={() => setIsOpen(false)}
-                      className="h-7 w-7 bg-gray-200 hover:bg-gray-300 rounded-full p-1 cursor-pointer"
-                    />
+                    <div className="absolute right-4">
+                      <XIcon
+                        onClick={() => setIsOpen(false)}
+                        className="h-7 w-7 bg-gray-200 hover:bg-gray-300 rounded-full p-1 cursor-pointer"
+                      />
+                    </div>
                   </div>
 
-                  <div className="flex space-x-4 items-center mt-2">
+                  <div className="flex space-x-4 items-center mt-2 p-4">
                     <Image
                       className="rounded-full"
                       alt="profile"
@@ -159,52 +161,56 @@ export default function SendPost({ user, photoClick, inputClick }) {
                       <p className="font-semibold">{user.name}</p>
                     </div>
                   </div>
-                  <div className="mt-2">
+                  <div className="mt-2 pt-0 p-4">
                     <form className="flex flex-1">
                       <textarea
                         ref={inputRef}
                         placeholder={`¿Qué estás pensando, ${user.name}?`}
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
-                        className="bg-white items-center outline-none rounded-lg h-20 flex flex-grow mt-4"></textarea>
+                        className="bg-white items-center outline-none h-20 flex flex-grow"></textarea>
                     </form>
                   </div>
 
                   {imageToPost && (
-                    <div className="relative h-56 md:h-96 bg-white">
-                      <XIcon
-                        onClick={removeImage}
-                        className="h-6 w-6 bg-gray-100 hover:bg-gray-200 rounded-full p-1 cursor-pointer z-10 absolute top-2 right-2"
-                      />
-                      <Image
-                        className="rounded-2xl"
-                        alt="post-image"
-                        src={imageToPost}
-                        objectFit="cover"
-                        layout="fill"
-                      />
-                    </div>
-                  )}
-
-                  {!imageToPost && (
-                    <div className="flex p-4 font-semibold items-center justify-between border-2 border-gray-300 rounded-xl">
-                      <p className="">Agregar a tu publicación</p>
-                      <div
-                        onClick={() => {
-                          filePickerRef.current.click();
-                        }}
-                        className="flex justify-end">
-                        <PhotographIcon className="h-9 w-9 text-green-500 rounded-full hover:bg-gray-200 hover:cursor-pointer p-1" />
-                        <input
-                          onChange={addImageToPost}
-                          ref={filePickerRef}
-                          type="file"
-                          hidden></input>
+                    <div className="pt-0 p-4">
+                      <div className="relative h-56 md:h-96 bg-white">
+                        <XIcon
+                          onClick={removeImage}
+                          className="h-6 w-6 bg-gray-100 hover:bg-gray-200 rounded-full p-1 cursor-pointer z-10 absolute top-2 right-2"
+                        />
+                        <Image
+                          className="rounded-2xl"
+                          alt="post-image"
+                          src={imageToPost}
+                          objectFit="cover"
+                          layout="fill"
+                        />
                       </div>
                     </div>
                   )}
 
-                  <div className="flex mt-4">
+                  {!imageToPost && (
+                    <div className="pt-0 p-4">
+                      <div className="flex p-4 font-semibold items-center justify-between border-2 border-gray-300 rounded-xl">
+                        <p className="">Agregar a tu publicación</p>
+                        <div
+                          onClick={() => {
+                            filePickerRef.current.click();
+                          }}
+                          className="flex justify-end">
+                          <PhotographIcon className="h-9 w-9 text-green-500 rounded-full hover:bg-gray-200 hover:cursor-pointer p-1" />
+                          <input
+                            onChange={addImageToPost}
+                            ref={filePickerRef}
+                            type="file"
+                            hidden></input>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="flex pt-0 p-4">
                     {!input && !imageToPost ? (
                       <button
                         disabled
