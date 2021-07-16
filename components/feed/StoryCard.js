@@ -6,7 +6,7 @@ const StoryCard = ({ src, profile }) => {
     <div className="relative h-14 w-14 md:h-20 md:w-20 lg:h-56 lg:w-32 cursor-pointer overflow-x p-3 rounded-full lg:rounded-xl shadow-lg">
       <Image
         alt="profile"
-        className="object-cover absolute opacity-0 lg:opacity-100 rounded-full z-40 top-10 "
+        className="object-cover absolute opacity-0 lg:opacity-100 rounded-full z-20 top-10 "
         src={profile}
         width={40}
         height={40}
